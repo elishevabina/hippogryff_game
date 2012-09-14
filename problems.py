@@ -31,14 +31,19 @@ class DivProblem(object):
 		
 		
 class SpanishProblem(object):
-	"""An object representing a random Spanish vocabulary drill"""
-	
-	def __init__(self):
+	"""An object representing a random Spanish vocabulary flashcard"""
+		
+	def __init__(self, words):
 		self.type = "spanish"
-		self.a = 1
-		self.b = 1
-		self.answer = "100"
-		self.statement = "This should be a spanish drill but it's under construction.  The answer is 100."
+		self.words = words
+		self.english = self.words.keys()[randint(0, len(self.words)-1)]
+		self.spanish = self.words[self.english]
+		self.statement = "What is \"{0}\" in Spanish?".format(self.english)
+		self.answer = self.spanish
 		
-		
+
+
+
+
+import random
 from random import randint

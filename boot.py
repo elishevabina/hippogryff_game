@@ -1,5 +1,3 @@
-
-
 class OpenBoot(object):
 	"""plays the opening of the boot and sends the user to the questions."""
 	
@@ -35,16 +33,14 @@ class AskQuestions(object):
 		self.wrong_message = "The box says, 'Sorry, that's not correct.'"
 	
 	def go(self):
-		for i in range(3):
-			problem = self.problem_type()
+		for i in range(self.num_questions):
+			if self.problem_type == SpanishProblem:
+				problem = self.problem_type(self.words)
+			else: problem = self.problem_type()
 			print problem.statement,
 			right = self.get_answer(problem)
 			if not right:
-				print "I'm afraid that's not right. ",
-				print "If you haven't gotten it yet you're probably not going",
-				print "to.  Better go practice."
-				next = EndGame()
-				return next
+				next = self.fail_response(problem)
 			else:
 				print "Right!"
 				next = BoxOpens()		#later this will make the user ascend a level, instead
@@ -55,19 +51,32 @@ class AskQuestions(object):
 		"""gives the user 2 chances to answer correctly.  Returns whether they got it right."""
 		
 		response = raw_input()		#response as a string
-		for i in range(2):
+		for i in range(1):
 			if response == problem.answer: break
 			print self.wrong_message
 			response = raw_input("Try again: ")
 		return response == problem.answer
 	
+	def fail_response(self, problem):
+		"""To be overwritten by the subclasses"""
+		pass
+		
+		
+		
 class AskSpanishQuestions(AskQuestions):
 	"""Runs a spanish vocab drill"""
 	
 	def __init__(self):
 		super(AskSpanishQuestions, self).__init__()
 		self.problem_type = SpanishProblem
-
+		self.num_questions = 6
+		self.words = [spanish_dictionary.nouns, spanish_dictionary.prepositions][randint(0, 1)]
+		
+	def fail_response(self, problem):
+		print "I'm afraid that's still wrong. "
+		print "The answer is \"{0}\"".format(problem.answer)
+		next = AskSpanishQuestions()
+		return next
 
 class AskMultQuestions(AskQuestions):
 	"""Asks three multiplication questions"""
@@ -75,6 +84,7 @@ class AskMultQuestions(AskQuestions):
 	def __init__(self):
 		super(AskMultQuestions, self).__init__()
 		self.problem_type = MultProblem
+		self.num_questions = 3
 	
 	def get_answer(self, problem):
 	
@@ -100,6 +110,13 @@ class AskMultQuestions(AskQuestions):
 			response = int(raw_input("Try again:  "))	
 		return response == problem.answer
 	
+	def fail_response(self, problem):
+				print "I'm afraid that's not right. ",
+				print "If you haven't gotten it yet you're probably not going",
+				print "to.  Better go practice your times tables."
+				next = EndGame()
+				return next
+	
 
 
 class BoxOpens(object):
@@ -118,3 +135,4 @@ import random
 from home import Home
 from end_game import EndGame
 from problems import *
+import spanish_dictionary
