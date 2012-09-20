@@ -1,30 +1,68 @@
+from go_fishing import GoFishing
+from fishing import Fish
+from home import Home
+
+
+class Home(object):
+    """class Home(object) represents the home location, where the user must
+    chose an activity."""
+    
+    
+    def __init__(self):
+           #name attribute will be useful for debugging
+           self.name = "Home"
+    
+    def go(self):
+    	"""returns an instance of the next task."""
+    	print "Do you say: "
+    	print "1. \"Let's go on an adventure!\""
+    	print "2.\"Let's make cake.\""
+    	print "3. \"I'm so sorry, but I'm busy now.  See you soon!\""
+    	
+    	response = raw_input("> ")
+        if response == "1":
+    		next = GoFishing()
+    	elif response == "2":
+    		next = Home()
+    	else:
+    		print "I'm sorry, I don't understand that."
+    		next = Home()
+    	
+    	return next
+	
+	
 class GoFishing(object):
     """Represents the beginning of the fishing adventure."""
 	
     def go(self):
         print "You go get your fishing rods and the three of you head to the lake."
         next = Fish(0)
+        print "about to set next.first_time"
         next.first_time = True
+        print "set next.first_time to True"
         return next
 		
 		
 class Fish(object):
-	"""Plays the lake where the user gets a tug on the line."""
-
+	
 	def __init__(self, refusals):
+		print "initializing Fish instance"
 		self.name = "Fish"
 		#the number of time the user has refused help
 		self.refusals = refusals
 		self.first_time = False
-
+		print self.first_time
+		print "finished initializing Fish instance"
 		
 	def go(self):
+		print "calling Fish.go"
     	#give option to go home
 		if not self.first_time:
 			next = self.home_option()
 			if next is not None:
 				return next
 			else: pass
+		else: print "it is the first time"
         
         #if they don't go home, give them a boot
 		print "After sitting for a while, you feel a huge tug on your line.",
@@ -50,7 +88,7 @@ class Fish(object):
 			print "The fish gets away and you have to rebait your line."
 			next = Fish(self.refusals + 1)
 		elif resp == "y":
-			next = ReelBoot()
+			quit()
 		else: 
 			print "I don't understand that."
 			next = Fish(self.refusals) 
@@ -64,34 +102,11 @@ class Fish(object):
 			next = Home()
 			return next
 		else: return None
-        	
-        	
 
-class ReelBoot(object):
-	"""Plays the reeling in of the boot, presenting the choice to open it or throw it back in."""
-	
-	def __init__(self):
-		self.boot_types = ["math", "spanish"]
-		self.decorations = ["numbers", "letters"]
-	
-	#picks a random boot type and prints the appropriate messages
-	def go(self): 
-		type = random.randint(0, 1)
-		print "Ting Pao helps you reel in your catch.  It's a huge, dripping boot",
-		print "with {0} embossed on the sides!".format(self.decorations[type])
-		print "Do you:"
-		print "1. Look inside the boot"
-		print "2. Throw it back into the lake"
-		resp = raw_input()
-		if resp == "1":
-			next = OpenBoot(self.boot_types[type])
-		else: 
-			print "You rebait your line and start fishing again."
-			next = Fish(0)
-		return next
  
+        	
 
-#imports at bottom to avoid circular issues 
-from home import Home
-from boot import OpenBoot   
-import random
+next = Home()		
+while True:
+	next = next.go()
+	#print "next.first time is " + str(next.first_time)

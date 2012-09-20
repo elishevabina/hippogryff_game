@@ -22,8 +22,8 @@ def play():
     next_task = Home()
     while True:
         next_task = next_task.go()
+        #print "next_task is", next_task, type(next_task)
         print
-        
 	
 
 play()
