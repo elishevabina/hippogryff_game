@@ -1,22 +1,26 @@
 from home import Home
 from spanish_dictionary import SpanishDict
 from problems import *
+import codecs
+import sys
 
 class AskQuestions(object):
 	"""Asks three questions."""
 	
 	def __init__(self):
 		self.wrong_message = "The box says, 'Sorry, that's not correct.'"
+		self.num_tries = 2
+		self.words = {}
 	
 	def go(self):
 		for i in range(self.num_questions):
 			if self.problem_type == SpanishProblem:
+				#problem = self.problem_type(SpanishDict().unicode)
 				problem = self.problem_type(self.words)
 			else: problem = self.problem_type()
 			print problem.statement,
 			next, right = self.get_answer(problem)
 			if not right:
-				next = self.fail_response(problem)
 				return next
 			else: 
 				print "Right!"
@@ -26,39 +30,76 @@ class AskQuestions(object):
 		next = self.get_next_task()		#later this will make the user ascend a level, instead
 		return next	
 	
+	def hint_one(self, problem): pass
+	
+	def hint_two(self, problem): pass
+
 	def get_answer(self, problem):
+		"""returns two values, next_task and a boolean right, whether they got it right
 		
-		"""gives the user 2 chances to answer correctly.  Returns whether they got it right."""
+			next_task is either the fail_response if the question
+			is answered wrong, or home if the user asked to go home.
+			
+		"""
 		
-		response = self.get_response()		#response as an int
-		for i in range(1):
+		next_task, response = self.get_response(problem)
+		if next_task is not None:			#i.e. if the user wants to go home
+			return next_task, False
+		
+		
+		for j in range(self.num_tries - 1):
 			if response == problem.answer: break
-			print self.wrong_message
-			response = self.get_response("Try again: ", problem)
-		return response == problem.answer
+			if j == 0:
+				print self.wrong_message
+			elif j == 1:
+				self.hint_one(problem)
+			elif j == 2: 
+				self.hint_two(problem)
+			next_task, response = self.get_response(problem, "Try again:  ")
+			#the Home case
+			if next_task is not None: 
+				return next_task, None
+		#the vanilla case, at the end
+		if response != problem.answer:
+			next_task = self.fail_response(problem)			
+		return next_task, response == problem.answer
 	
-	def get_response(self, prompt="\n> ", problem):
-		"""returns the response as an int. 
+	def get_response(self, problem, prompt="\n> "):
+		"""returns two values, the next_task and a response	"""
 		
-		 The SpanishQuestions subclass needs to overwrite this."""
-	
+		value_error_message = """Type 'quit' to quit or 'home' to go home, 
+or type a number (digits only) to answer the question."""
+		
 		response = raw_input(prompt)
-		
+		if response == "quit": quit()
 		while True:
 			try:
 				response = int(response)
+				return None, response
 			except ValueError:
-				print "Type 'quit' to quit or type a number (digits only) to answer the question." 
-				response = self.offer_quit(problem)
-			return response
-		
+				print value_error_message
+				next_task, response = self.offer_quit(problem)
+				if next_task is not None:
+					return next_task, response
+				else: continue
+				 
+			
 	def offer_quit(self, question):
+		"""returns two values, next_task and the response"""
+		
 		resp = raw_input("> ")
 		if resp == "quit": quit()
 		if resp == "I give up":
-			print question.answer
-			return question.answer
-		else: return resp
+			if type(question.answer) is str:
+				print question.answer.decode('utf-8')
+			else: 
+				print question.answer
+			next = self
+			next.words = self.words
+			return next, "something that won't equal the answer"
+		if resp == "home":
+			return Home(), None
+		else: return None, resp		#if they try to answer
 			
 	def fail_response(self, problem):
 		"""To be overwritten by the subclasses"""
@@ -91,14 +132,18 @@ class AskSpanishQuestions(AskQuestions):
 		next = AskSpanishQuestions()
 		return next
 
-	def get_response(self, prompt="> ", problem):
-		"""returns response as a string"""
-		response = raw_input(prompt)
+	def get_response(self, problem, prompt="\n> "):
+		"""returns next_task and response as a string"""
+		
+		response = raw_input(prompt).decode(sys.stdin.encoding)
+		if response == "quit": quit()
 		if response == "":
-			print "Type 'quit' to quit or 'I give up' to give up,"
+			print "Type 'quit' to quit, 'home' to go home, 'I give up' to give up,"
 			print "or try to answer the question."
-			response = self.offer_quit(problem)
-		return response
+			next_task, response = self.offer_quit(problem)
+			if next_task is not None:
+				return next_task, response
+		return None, response.encode('utf-8')
 
 class AskMultQuestions(AskQuestions):
 	"""Asks three multiplication questions"""
@@ -108,22 +153,7 @@ class AskMultQuestions(AskQuestions):
 		self.problem_type = MultProblem
 		self.num_questions = 3
 		self.num_tries = 3
-	
-	def get_answer(self, problem):
-	
-		"""gives the user three chances to answer correctly. Returns whether they got it or not."""
-		
-		response = self.get_response()
-		for j in range(self.num_tries - 1):
-			if response == problem.answer: break
-			if j == 0:
-				print self.wrong_message
-			elif j == 1:
-				self.hint_one(problem)
-			elif j == 2: 
-				self.hint_two(problem)
-			response = self.get_response("Try again:  ")
-		return response == problem.answer
+
 	
 	def hint_one(self, problem):
 		print "'That's still not correct. You're allowed to count on your fingers.'"
@@ -168,7 +198,8 @@ class AskHardMultQuestions(AskMultQuestions):
 		
 		if problem.b > 7:
 			print "What is {0} * 10?  ".format(problem.a)
-			response = self.get_response()
+			response = self.get_response(problem)[1]
+			print "you said", response
 			if response != problem.a * 10:
 				print "I'm afraid not. It's actually {0}. ".format(problem.a * 10)
 			else: 
@@ -180,7 +211,7 @@ class AskHardMultQuestions(AskMultQuestions):
 			round_part = (problem.a / 10) * 10
 			remainder = problem.a % 10
 			print "What is {0} * {1}?  ".format(round_part, problem.b)
-			response = self.get_response()
+			response = self.get_response(problem)[1]
 			ans = round_part * problem.b
 			
 			if response != ans:
@@ -189,7 +220,7 @@ class AskHardMultQuestions(AskMultQuestions):
 				print "Good. "
 				
 			print "Now, what is {0} * {1}? ".format(remainder, problem.b)
-			response = self.get_response()
+			response = self.get_response(problem)[1]
 			ans = remainder * problem.b
 			
 			if response != ans:
@@ -201,7 +232,7 @@ class AskHardMultQuestions(AskMultQuestions):
 			print problem.statement
 
 	def get_next_task(self):
-		return AskQuestions.get_next_task()
+		return BoxOpens()
 
 from boot import BoxOpens
 from end_game import EndGame

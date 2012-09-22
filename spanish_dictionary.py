@@ -37,9 +37,12 @@ class SpanishDict(object):
 			  "difficult": "difícil", "easy": u"fácil",  
 			 }
 
-		self.adverbs = {"maybe": "quizás", "now": "ahora", "already": "ya", 
+		self.adverbs = {"maybe": u"quizás", "now": "ahora", "already": "ya", 
 		   "here": u"aquí", "together": "juntos", "alone": "solo",
 			}
+			
+		self.unicode = {"small": u"pequeño", "easy": u"fácil", 
+		"tomorrow": u"mañana"}
 			
 		self.lists = [self.nouns, self.days, self.prepositions, self.verbs,
 			self.adjectives, self.adverbs

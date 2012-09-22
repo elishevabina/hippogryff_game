@@ -27,7 +27,7 @@ class Fish(object):
 			else: pass
         
         #if they don't go home, give them a boot
-		print "After sitting for a while, you feel a huge tug on your line.",
+		print "After sitting for a while, you feel a huge tug on your line."
 		print "You start to reel it in but are having trouble. " 
 		print "Do you ask for help? Say 'y' or 'n'. "
 		
@@ -36,13 +36,13 @@ class Fish(object):
 			#should probably be modulized as a Gruesome Death class or something
 			TOLERANCE = 3	#number of guesses
 			if self.refusals > TOLERANCE - 2:
-				print "A thunderous voice proclaims, 'Your arrogance and presumption"
-				print "have angered the Angel of Cooperation!'",
-				print "A monstrous being with fifteen heads appears and cuts your boat"
-				print "in half with a flaming sword."
-				print "As you, Ping Tao, and Ting Pao sink together into the depths,",
-				print "the Leviathan and his vast brood of progeny surround you,",
-				print "rending and devouring your flesh."
+				print "A thunderous voice proclaims, 'Your arrogance and"
+				print "presumption have angered the Angel of Cooperation!'"
+				print "A monstrous being with fifteen heads appears and cuts"
+				print "your boat in half with a flaming sword. As you, Ping Tao"
+				print "and Ting Pao sink together into the depths, the Leviathan"
+				print " and his vast brood of progeny surround you, rending"
+				print "and devouring your flesh."
 				print
 				print "Game over."
 				quit()
@@ -61,6 +61,9 @@ class Fish(object):
 		print "You fish for 10 minutes without catching anything.  Do you want to go home?"
 		resp = raw_input().lower()
 		if resp == "y" or resp == "yes": 
+			print
+			print "You and Ping Tao and Ting Pao go home."
+			print "You have to decide what to do now."
 			next = Home()
 			return next
 		else: return None
@@ -77,7 +80,7 @@ class ReelBoot(object):
 	#picks a random boot type and prints the appropriate messages
 	def go(self): 
 		type = random.randint(0, 1)
-		print "Ting Pao helps you reel in your catch.  It's a huge, dripping boot",
+		print "Ting Pao helps you reel in your catch.  It's a huge, dripping boot"
 		print "with {0} embossed on the sides!".format(self.decorations[type])
 		print "Do you:"
 		print "1. Look inside the boot"

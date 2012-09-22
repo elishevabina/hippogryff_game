@@ -42,9 +42,26 @@ class SpanishProblem(object):
 		self.type = "spanish"
 		self.words = words
 		self.english = self.words.keys()[randint(0, len(self.words)-1)]
-		self.spanish = self.words[self.english]
+		#print "the word for this new question is: ", repr(self.english)
+		#print type(self.words[self.english])
+		self.spanish = self.words[self.english].encode('utf-8')
 		self.statement = "What is \"{0}\" in Spanish?".format(self.english)
 		self.answer = self.spanish
+		
+		
+class CakeProblem(object):
+	
+	def __init__(self, ingredient, answer, ratio):
+		self.type = "cake"
+		self.ingredient = ingredient
+		self.answer = answer
+		self.ratio = ratio
+		self.recipe = answer * ratio
+		self.statement = """The recipe calls for {0} cups of {1}.  
+How many will you need?""".format(self.recipe, self.ingredient)
+		if ingredient == "eggs":
+			self.statement = """The recipe calls for {0} eggs.  
+How many will you need?""".format(self.recipe)
 		
 
 
