@@ -1,3 +1,5 @@
+"""Implements Home"""
+
 class Home(object):
     """class Home(object) represents the home location, where the user must
     chose an activity."""
@@ -30,11 +32,11 @@ class Home(object):
 	
 #imports at end because they are circular
 from end_game import EndGame
-from fishing import GoFishing
+from fishing import GoFishing, ReelBoot
 from boot import OpenBoot
 from cake import Cake
 
 from ask_questions import *
-import fishing
+
 		
 	

@@ -1,6 +1,16 @@
-from home import Home
+"""Implements the various subclasses of AskQuestions which
+run the question-asking and answering activities, using the various Problems
+from the problems module.
+
+Most of the randomization happens in the problems module, 
+with the exception of the set of spanish flashcards (i.e. the category),
+which is chosen randomly here in the ask_questions module.
+"""
+
+import problems
+from end_game import EndGame
 from spanish_dictionary import SpanishDict
-from problems import *
+from random import randint
 import codecs
 import sys
 
@@ -90,8 +100,8 @@ or type a number (digits only) to answer the question."""
 		resp = raw_input("> ")
 		if resp == "quit": quit()
 		if resp == "I give up":
-			if type(question.answer) is str:
-				print question.answer.decode('utf-8')
+			if type(question.answer) is str:	#can only decode a str
+				print question.answer.decode('utf-8')	#question.answer is a utf-8 str, not a unicode object
 			else: 
 				print question.answer
 			next = self
@@ -118,7 +128,7 @@ class AskSpanishQuestions(AskQuestions):
 	get stuck here forever, or until they learn the vocabulary.
 	
 	"""
-	problem_type = SpanishProblem
+	problem_type = problems.SpanishProblem
 	
 	def __init__(self):
 		super(AskSpanishQuestions, self).__init__()
@@ -152,7 +162,7 @@ class AskMultQuestions(AskQuestions):
 	
 	num_questions = 3
 	num_tries = 3
-	problem_type = MultProblem
+	problem_type = problems.MultProblem
 	
 	def __init__(self):
 		super(AskMultQuestions, self).__init__()
@@ -178,7 +188,7 @@ class AskMultQuestions(AskQuestions):
 class AskDivQuestions(AskMultQuestions):
 	"""Asks three division questions"""
 	
-	problem_type = DivProblem
+	problem_type = problems.DivProblem
 	
 	def __init__(self):
 		super(AskDivQuestions, self).__init__()
@@ -190,7 +200,7 @@ class AskDivQuestions(AskMultQuestions):
 class AskHardMultQuestions(AskMultQuestions):
 	
 	num_tries = 4
-	problem_type = HardMultProblem
+	problem_type = problems.HardMultProblem
 	
 	def __init__(self):
 		super(AskHardMultQuestions, self).__init__()
@@ -240,6 +250,17 @@ class AskHardMultQuestions(AskMultQuestions):
 	def get_next_task(self):
 		return BoxOpens()
 
-from boot import BoxOpens
-from end_game import EndGame
-import spanish_dictionary
+class BoxOpens(object):
+
+	def go(self):
+		print "Well done!  The box lid slowly opens.  Inside are four small cakes."
+		print "You each take one cake, and Ping Tao puts the last inside the small box"
+		print "to take back to the hippogriff.  The three of you set off for home,"
+		print "eating the cakes as you go.  When you get back, Ting Pao and Ping Tao"
+		print "ask, \"What shall we do now?\""
+		next = Home()
+		return next
+
+
+
+from home import Home

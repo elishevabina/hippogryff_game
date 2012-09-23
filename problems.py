@@ -1,6 +1,11 @@
-#TODO for different kinds of problems (multiplication, division, etc) should I use inheritance?
-#they'll have all the same attributes but different init methods, so I think I'd end up
-#typing almost everything over and over anyway.
+"""Exports the Problem classes. 
+
+The various Problem classes have common structure but do not inherit from each other.
+"""
+
+import random
+from random import randint
+
 class MultProblem(object):
 	"""An object representing a random multiplication problem	"""
 	
@@ -70,7 +75,3 @@ How many will you need?""".format(self.recipe)
 
 
 
-
-import random
-from random import randint
-from temp import twenty

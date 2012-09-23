@@ -1,3 +1,5 @@
+"""Implements the class EndGame"""
+
 class EndGame(object):
     """represents saying goodbye."""
 	

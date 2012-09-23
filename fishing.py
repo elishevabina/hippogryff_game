@@ -1,3 +1,14 @@
+"""Implements GoFishing, Fish, and ReelBoot.  
+
+ReelBoot picks a random boot type (math or spanish)
+and calls boot.OpenBoot with that type.
+"""
+
+from ask_questions import *
+from boot import OpenBoot
+import random
+
+
 class GoFishing(object):
     """Represents the beginning of the fishing adventure."""
 	
@@ -73,7 +84,7 @@ class Fish(object):
 class ReelBoot(object):
 	"""Plays the reeling in of the boot, presenting the choice to open it or throw it back in."""
 	
-	boot_types = ["math", "spanish"]
+	boot_types = [AskMultQuestions, AskSpanishQuestions]
 	decorations = ["numbers", "letters"]
 	
 	#picks a random boot type and prints the appropriate messages
@@ -86,6 +97,7 @@ class ReelBoot(object):
 		print "2. Throw it back into the lake"
 		resp = raw_input()
 		if resp == "1":
+			print self.boot_types[type]
 			next = OpenBoot(self.boot_types[type])
 		else: 
 			print "You rebait your line and start fishing again."
@@ -95,5 +107,4 @@ class ReelBoot(object):
 
 #imports at bottom to avoid circular issues 
 from home import Home
-from boot import OpenBoot   
-import random
+   

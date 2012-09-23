@@ -1,5 +1,5 @@
 #!/usr/bin/python
-"""This module(? script?) runs the Ping Tao and Ting Pao Game."""
+"""This module runs the Ping Tao and Ting Pao Game."""
 
 from home import Home
 

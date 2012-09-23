@@ -1,3 +1,8 @@
+"""Implements the Cake class, which plays the cake scenario."""
+
+from problems import CakeProblem
+import random
+
 class Cake(object):
 	"""The cake scenario.  
 	
@@ -96,8 +101,4 @@ figure out what to divide by to get exactly enough cake for 3 people."""
 				else: print "Please enter a number using decimal notation."
 		
 	
-	
-	
-from home import Home
-from problems import CakeProblem
-import random
+from home import Home	
