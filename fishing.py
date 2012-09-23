@@ -43,6 +43,9 @@ class Fish(object):
 		print "Do you ask for help? Say 'y' or 'n'. "
 		
 		resp = raw_input()
+		while resp != "y" and resp != "n":
+			print "I don't understand that. Please enter 'y' or 'n'."
+			resp = raw_input()
 		if resp == "n":
 			#should probably be modulized as a Gruesome Death class or something
 			TOLERANCE = 3	#number of guesses
@@ -62,10 +65,6 @@ class Fish(object):
 			next = Fish(self.refusals + 1)
 		elif resp == "y":
 			next = ReelBoot()
-		else: 
-			print "I don't understand that."
-			next = Fish(self.refusals) 
-			next.first_time = self.first_time
 		return next
 	
 	def home_option(self):
@@ -96,6 +95,9 @@ class ReelBoot(object):
 		print "1. Look inside the boot"
 		print "2. Throw it back into the lake"
 		resp = raw_input()
+		while resp != "1" and resp != '2':
+			print "I don't understand that.  Please enter '1' or '2'."
+			resp = raw_input()
 		if resp == "1":
 			print self.boot_types[type]
 			next = OpenBoot(self.boot_types[type])
