@@ -12,7 +12,7 @@ class Fish(object):
 	"""Plays the lake where the user gets a tug on the line."""
 
 	def __init__(self, refusals):
-		self.name = "Fish"
+		
 		#the number of time the user has refused help
 		self.refusals = refusals
 		self.first_time = False
@@ -73,9 +73,8 @@ class Fish(object):
 class ReelBoot(object):
 	"""Plays the reeling in of the boot, presenting the choice to open it or throw it back in."""
 	
-	def __init__(self):
-		self.boot_types = ["math", "spanish"]
-		self.decorations = ["numbers", "letters"]
+	boot_types = ["math", "spanish"]
+	decorations = ["numbers", "letters"]
 	
 	#picks a random boot type and prints the appropriate messages
 	def go(self): 

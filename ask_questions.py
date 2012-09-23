@@ -7,14 +7,11 @@ import sys
 class AskQuestions(object):
 	"""Asks three questions."""
 	
-	def __init__(self):
-		self.wrong_message = "The box says, 'Sorry, that's not correct.'"
-		self.num_tries = 2
-		self.words = {}
+	wrong_message = "The box says, 'Sorry, that's not correct.'"
 	
 	def go(self):
 		for i in range(self.num_questions):
-			if self.problem_type == SpanishProblem:
+			if type(self) == AskSpanishQuestions:
 				#problem = self.problem_type(SpanishDict().unicode)
 				problem = self.problem_type(self.words)
 				if i > 0 and problem.answer == last.answer:
@@ -121,11 +118,13 @@ class AskSpanishQuestions(AskQuestions):
 	get stuck here forever, or until they learn the vocabulary.
 	
 	"""
+	problem_type = SpanishProblem
 	
 	def __init__(self):
 		super(AskSpanishQuestions, self).__init__()
-		self.problem_type = SpanishProblem
+	
 		self.num_questions = 6
+		self.num_tries = 2
 		Dict = SpanishDict()
 		self.words = Dict.lists[randint(0, len(Dict.lists)-1)]
 		
@@ -151,12 +150,12 @@ class AskSpanishQuestions(AskQuestions):
 class AskMultQuestions(AskQuestions):
 	"""Asks three multiplication questions"""
 	
+	num_questions = 3
+	num_tries = 3
+	problem_type = MultProblem
+	
 	def __init__(self):
 		super(AskMultQuestions, self).__init__()
-		self.problem_type = MultProblem
-		self.num_questions = 3
-		self.num_tries = 3
-
 	
 	def hint_one(self, problem):
 		print "'That's still not correct. You're allowed to count on your fingers.'"
@@ -179,19 +178,23 @@ class AskMultQuestions(AskQuestions):
 class AskDivQuestions(AskMultQuestions):
 	"""Asks three division questions"""
 	
+	problem_type = DivProblem
+	
 	def __init__(self):
 		super(AskDivQuestions, self).__init__()
-		self.problem_type = DivProblem
+	#	self.
 		self.num_tries = 3
 		
 
 
 class AskHardMultQuestions(AskMultQuestions):
 	
+	num_tries = 4
+	problem_type = HardMultProblem
+	
 	def __init__(self):
 		super(AskHardMultQuestions, self).__init__()
-		self.problem_type = HardMultProblem
-		self.num_tries = 4
+		
 		
 	def hint_one(self, problem):
 		print "That's still not right.  Try breaking the problem down."

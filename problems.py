@@ -4,13 +4,14 @@
 class MultProblem(object):
 	"""An object representing a random multiplication problem	"""
 	
+	type = "multiplication"
+	
 	def __init__(self):
-		self.type = "multiplication"
 		self.a = randint(2, 10)
 		self.b = randint(2, 10)
 		self.answer = self.a * self.b
 		self.statement = "What is {0} * {1}?  ".format(self.a, self.b)
-		
+	
 
 class HardMultProblem(object):
 	"""An object representing a random hard multiplication problem."""
@@ -36,7 +37,10 @@ class DivProblem(object):
 		
 		
 class SpanishProblem(object):
-	"""An object representing a random Spanish vocabulary flashcard"""
+	"""An object representing a random Spanish vocabulary flashcard 
+	
+	the flashcard is picked from the given set of words
+	"""
 		
 	def __init__(self, words):
 		self.type = "spanish"
@@ -69,3 +73,4 @@ How many will you need?""".format(self.recipe)
 
 import random
 from random import randint
+from temp import twenty

@@ -1,11 +1,7 @@
 class Home(object):
     """class Home(object) represents the home location, where the user must
     chose an activity."""
-    
-    
-    def __init__(self):
-           #name attribute will be useful for debugging
-           self.name = "Home"
+
     
     def go(self):
     	"""returns an instance of the next task."""
@@ -37,9 +33,8 @@ from end_game import EndGame
 from fishing import GoFishing
 from boot import OpenBoot
 from cake import Cake
-from ask_questions import *
 
-#for debugging
+from ask_questions import *
 import fishing
 		
 	

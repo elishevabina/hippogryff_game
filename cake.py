@@ -35,12 +35,18 @@ and Ting Pao.  The next morning they come again to hang out.""",
 		return next
 		
 	def get_answer(self, problem):
+		"""Poses a problem and gives three chances to answer it.
+	
+		Because of the hint, this is specific to CakeProblem.
+
+		"""	
 		print problem.statement
 		resp = self.get_float()
 		for i in range(3):
 			if resp == problem.answer: break
 			print "Nope, try again."
 			if i > 1:
+				#this is the hint
 				print "Remember, you are dividing the recipe by {0}.".format(problem.ratio)
 			resp = self.get_float()
 		if resp != problem.answer:
@@ -56,6 +62,12 @@ and Ting Pao.  The next morning they come again to hang out.""",
 				print "You would need {0} eggs.".format(problem.answer)
 				
 	def get_ratio_loop(self, right_ans):
+		"""loops until the user has entered the right answer
+		
+		Also prints comments that are specific to the recipe
+		scaling problem in the beginning of the cake
+		"""
+		
 		ans = self.get_float()
 		while ans != right_ans: 
 	
@@ -73,6 +85,7 @@ figure out what to divide by to get exactly enough cake for 3 people."""
 			ans = self.get_float()
 	
 	def get_float(self, prompt="> "):
+		"""runs a try/except loop until the user has entered a decimal."""
 		while True:
 			ans = raw_input(prompt)
 			try: 	
