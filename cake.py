@@ -45,7 +45,8 @@ and Ting Pao.  The next morning they come again to hang out.""",
 			resp = self.get_float()
 		if resp != problem.answer:
 			self.fail_response(problem)
-		print "Right!"
+		else:
+			print "Right!"
 	
 	def fail_response(self, problem):
 			print "I'm afraid you still haven't got it."

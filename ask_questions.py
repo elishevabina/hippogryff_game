@@ -17,6 +17,8 @@ class AskQuestions(object):
 			if self.problem_type == SpanishProblem:
 				#problem = self.problem_type(SpanishDict().unicode)
 				problem = self.problem_type(self.words)
+				if i > 0 and problem.answer == last.answer:
+					problem = self.problem_type(self.words)
 			else: problem = self.problem_type()
 			print problem.statement,
 			next, right = self.get_answer(problem)
@@ -24,6 +26,7 @@ class AskQuestions(object):
 				return next
 			else: 
 				print "Right!"
+			last = problem
 		
 		print "The box flashes and says"
 		print "\tVery good!  You have answered all my questions correctly."

@@ -6,8 +6,8 @@ class MultProblem(object):
 	
 	def __init__(self):
 		self.type = "multiplication"
-		self.a = randint(1, 10)
-		self.b = randint(1, 10)
+		self.a = randint(2, 10)
+		self.b = randint(2, 10)
 		self.answer = self.a * self.b
 		self.statement = "What is {0} * {1}?  ".format(self.a, self.b)
 		

@@ -13,7 +13,7 @@ class SpanishDict(object):
 					  
 		self.days = {"today": "hoy", "tomorrow": u"mañana", "yesterday": "ayer", 
 			"Monday": "lunes", "Tuesday": "martes", "Wednesday": u"miércoles",
-			"Thursday": "jueves", "Friday": "viernes", "Saturday": "sábado",
+			"Thursday": "jueves", "Friday": "viernes", "Saturday": u"sábado",
 			"Sunday": "domingo"		  
 		}
 			 
@@ -27,22 +27,22 @@ class SpanishDict(object):
 		 "to make, do": "hacer", "(I) do": "hago", "(you) do": "haces",
 		 "(he) does": "hace", "to come": "venir", "to see": "ver",
 		 "I see": "veo", "you see": "ves", "she sees": "ve", 
-		 "we see": "vemos", "they see": "ven", "y'all see": "veis",
+		 "we see": "vemos", "they see": "ven", "(you all) see": "veis",
 		 "I can": "puedo", "you can": "puedes", "he can": "puede",
-		 "we can": "podemos", "y'all can": "podéis", "they can": "pueden",
+		 "we can": "podemos", "you all can": "podéis", "they can": "pueden",
 		 "to want": "querer", 
 		 }
 		 
 		self.adjectives = {"small": u"pequeño", "beautiful": "hermoso", "ugly": "feo",
-			  "difficult": "difícil", "easy": u"fácil",  
+			  "difficult": "difícil", "easy": u"fácil", "tall": "alto", "red": "rojo",
 			 }
 
 		self.adverbs = {"maybe": u"quizás", "now": "ahora", "already": "ya", 
 		   "here": u"aquí", "together": "juntos", "alone": "solo",
 			}
 			
-		self.unicode = {"small": u"pequeño", "easy": u"fácil", 
-		"tomorrow": u"mañana"}
+		#self.unicode = {"small": u"pequeño", "easy": u"fácil", 
+		#"tomorrow": u"mañana"}
 			
 		self.lists = [self.nouns, self.days, self.prepositions, self.verbs,
 			self.adjectives, self.adverbs
